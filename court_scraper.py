@@ -70,7 +70,9 @@
     function showButtons() {
         var searchButtons =`
          <button class="dateBtn" data-days="7" id="nextWeek">Next Week</button>
-         <button class="dateBtn" data-days="30" id="nextMonth">Next Month</button>`
+         <button class="dateBtn" data-days="30" id="nextMonth">Next Month</button>
+         <br>
+         <button class="dateBtn" data-days="0" id="actualDates">Actual Dates</button>`
 
         setTimeout(function(){
             var title = $('#MainTitle').text();
@@ -110,16 +112,20 @@
 
     function setDate() {
         var days = parseInt(this.dataset.days);
-        $('#SCDATE').val($('#ToDate').val());
-        var endDate = new Date($('#ToDate').val());
-        endDate.setDate(endDate.getDate() + days);
-        var theMonth = endDate.getMonth() + 1;
-        if (theMonth < 10) theMonth = "0" + theMonth
-        theDay = endDate.getDate()
-        if (theDay < 10) theDay = "0" + theDay
-        var formatted = `${theMonth}/${theDay}/${endDate.getFullYear()}`
-        $('#ToDate').val(formatted);
-        $('#btnSubmit').click();
+        if(days > 0) {
+            $('#SCDATE').val($('#ToDate').val());
+            var endDate = new Date($('#ToDate').val());
+            endDate.setDate(endDate.getDate() + days);
+            var theMonth = endDate.getMonth() + 1;
+            if (theMonth < 10) theMonth = "0" + theMonth
+            var theDay = endDate.getDate()
+            if (theDay < 10) theDay = "0" + theDay
+            var formatted = `${theMonth}/${theDay}/${endDate.getFullYear()}`
+            $('#ToDate').val(formatted);
+            $('#btnSubmit').click();
+        } else { // Use actual dates from form
+            $('#btnSubmit').click();
+        }
     }
 
 })(XMLHttpRequest.prototype.open);
